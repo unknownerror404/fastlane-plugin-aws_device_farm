@@ -133,6 +133,13 @@ module Fastlane
             end
           ),
           FastlaneCore::ConfigItem.new(
+            key:         :vpce_configuration_arn,
+            env_name:    'FL_AWS_VPCE_ARN',
+            description: 'Define the VPCE ARN (AWS) when a VPC doesn''t have internet connectivity (Internet Gateway).  Account must also be WHITELISTED.',
+            is_string:   true,
+            optional:    true
+          ),
+          FastlaneCore::ConfigItem.new(
             key:         :test_package_type,
             env_name:    'FL_AWS_DEVICE_FARM_TEST_PACKAGE_TYPE',
             description: 'Define the type of the test binary to upload to the device farm project',
@@ -347,7 +354,7 @@ module Fastlane
         end
 
         # vpce
-        vpce_config_arns = []
+        vpce_config_arns = nil
         if params.key?("vpce_configuration_arn")
           vpce_config_arns = [
             params[:vpce_configuration_arn]
